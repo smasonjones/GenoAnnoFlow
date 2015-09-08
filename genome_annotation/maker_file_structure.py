@@ -38,7 +38,7 @@ for line in masterfile:
 		for path in linearr:
 			if(path.find('.') > -1):
 				try:
-					os.remove(path)		
+					os.remove(path)	
 				except:
-					print " "
+					print ""	
 print "Done."

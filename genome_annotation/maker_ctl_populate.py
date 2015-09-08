@@ -3,9 +3,36 @@
 import shutil
 import os
 import sys
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('masterfile')
+parser.add_argument('--cpus',default='1')
+parser.add_argument('--alt_peptide', default='C')
+parser.add_argument('--max_dna_length',default='100000')
+parser.add_argument('--mincontig',default='1')
+parser.add_argument('--predlength',default='200')
+parser.add_argument('--predstats',default='0')
+parser.add_argument('--AEDThreshold',default='1')
+parser.add_argument('--minprotein',default='0')
+parser.add_argument('--altsplice',default='0')
+parser.add_argument('--always_complete',default='0')
+parser.add_argument('--map_forward',default='0')
+parser.add_argument('--keep_preds',default='0')
+parser.add_argument('--split_hit',default='10000')
+parser.add_argument('--single_exon',default='0')
+parser.add_argument('--single_length',default='250')
+parser.add_argument('--correct_est_fusion',default='0')
+parser.add_argument('--tries',default='2')
+parser.add_argument('--clean_try',default='0')
+parser.add_argument('--clean_up',default='0')
+parser.add_argument('--organism_type',default='eukaryotic')
+parser.add_argument('--model_org', default=' ')
+parser.add_argument('--TMP',default=' ')
+args = parser.parse_args(sys.argv[1:])
 
 masterfile = open(sys.argv[1],'r')
-
+line = masterfile.readline()
 for line in masterfile:
 	files = line.split()
 	root = files[0].split('.')
@@ -68,7 +95,51 @@ for line in masterfile:
                         new_opts.write("snoscan_rrna=" + files[14] + '\n')
 		elif(line.find("other_gff=") > -1 and files[13] != '0'):
                         new_opts.write("other_gff=" + files[13] + '\n')
-		
+		elif(line.find("cpus") > -1):
+			new_opts.write("cpus=" + args.cpus + "\n")
+		elif(line.find("alt_peptide") > -1):
+			new_opts.write("alt_peptide=" + args.alt_peptide + "\n")
+		elif(line.find("max_dna_length") > -1):
+                        new_opts.write("max_dna_length=" + args.max_dna_length + "\n")
+		elif(line.find("mincontig") > -1):
+                        new_opts.write("mincontig=" + args.mincontig + "\n")
+		elif(line.find("predlength") > -1):
+                        new_opts.write("predlength=" + args.predlength + "\n")
+		elif(line.find("predstats") > -1):
+                        new_opts.write("predstats=" + args.predstats + "\n")
+		elif(line.find("AEDThreshold") > -1):
+                        new_opts.write("AEDThreshold=" + args.AEDThreshold + "\n")
+		elif(line.find("minprotein") > -1):
+                        new_opts.write("minprotein=" + args.minprotein + "\n")
+		elif(line.find("altsplice") > -1):
+                        new_opts.write("altsplice=" + args.altsplice + "\n")
+		elif(line.find("always_complete") > -1):
+                        new_opts.write("always_complete=" + args.always_complete + "\n")
+		elif(line.find("map_forward") > -1):
+                        new_opts.write("map_forward=" + args.map_forward + "\n")
+		elif(line.find("keep_preds") > -1):
+                        new_opts.write("keep_preds=" + args.keep_preds + "\n")
+		elif(line.find("split_hit") > -1):
+                        new_opts.write("split_hit=" + args.split_hit + "\n")
+		elif(line.find("single_exon") > -1):
+                        new_opts.write("single_exon=" + args.single_exon + "\n")
+		elif(line.find("single_length") > -1):
+                        new_opts.write("single_length=" + args.single_length + "\n")
+		elif(line.find("correct_est_fusion") > -1):
+                        new_opts.write("correct_est_fusion=" + args.correct_est_fusion + "\n")
+		elif(line.find("tries") > -1):
+                        new_opts.write("tries=" + args.tries + "\n")
+                elif(line.find("clean_try") > -1):
+                        new_opts.write("clean_try=" + args.clean_try + "\n")
+		elif(line.find("clean_up") > -1):
+                        new_opts.write("clean_up=" + args.clean_up + "\n")
+		elif(line.find("TMP") > -1):
+                        new_opts.write("TMP=" + args.TMP + "\n")
+		elif(line.find("organism_type") > -1):
+		        new_opts.write("organism_type=" + args.organism_type + "\n")
+                elif(line.find("model_org") > -1):
+                        new_opts.write("model_org=" + args.model_org + "\n")
+
 		else:
 			new_opts.write(line)
 

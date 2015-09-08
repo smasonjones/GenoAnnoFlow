@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -l nodes=1:ppn=2,walltime=96:00:00,mem=16gb
+#PBS -l nodes=1:ppn=2,walltime=300:00:00,mem=16gb 
 #PBS -N MAKER.Hw -j oe
 
 cd ~/bigdata/MAKER
@@ -24,6 +24,7 @@ fi
 
 PREF=`head -n $N files | tail -n 1`
 cd $PREF 
+ln -s ../../../genome_annotation/ scripts
 maker
 mkdir snap
 cp *maker.output/*.datastore/*/*/*/*gff snap/
@@ -34,5 +35,12 @@ fathom -export 1000 -plus uni.ann uni.dna
 forge export.ann export.dna
 hmm-assembler.pl pyu . > snap.hmm
 cd ..
-python ../../../maker_retrain.py
+python scripts/maker_retrain.py
 maker
+cd *.maker.output
+bash ../scripts/get_gff_fasta.sh
+bash ../scripts/make_map_ids.sh
+bash ../scripts/map_ids.sh
+bash ../scripts/run_swissprot_blast.sh
+bash ../scripts/add_functional.sh
+bash ../scripts/rename_contigs.sh
