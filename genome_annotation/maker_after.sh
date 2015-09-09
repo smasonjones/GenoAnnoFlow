@@ -16,7 +16,7 @@ cd $PREF
 ln -s ../../../genome_annotation/ scripts
 cd *.maker.output
 bash ../scripts/get_gff_fasta.sh
-bash ../scripts/make_map_ids.sh
+bash ../scripts/make_mapids.sh
 bash ../scripts/map_ids.sh
 bash ../scripts/run_swissprot_blast.sh
 bash ../scripts/add_functional.sh

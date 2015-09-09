@@ -3,7 +3,7 @@ SIZE=500
 module load ncbi-blast
 D=`dirname \`pwd\``
 SPECIES=`basename $D`
-PREFIX=../$SPECIES
+PREFIX=$SPECIES
 CPU=1
 if [ $PBS_NP ]; then
  CPU=$PBS_NP
